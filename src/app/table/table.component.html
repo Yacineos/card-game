@@ -1,3 +1,18 @@
+<h2>    <b>qui pioche un joker en premier ?</b>
+</h2>
 <pre>
-    {{ testCard?.image }}
+    
+
+    <img *ngIf="cardsService.sigGameState().isReset" src="https://deckofcardsapi.com/static/img/back.png">
+    <img *ngIf="!cardsService.sigGameState().isReset" src={{testCard.cards[0].image}}>
+
+    <button *ngIf=" cardsService.sigGameState().winner == undefined"
+            (click)="drawCard()"
+    >tirer une carte</button>           <button (click)="reset()">rejouer</button>
+
+
+
+    au tour de : {{cardsService.sigGameState().turn}} 
+
+    le gagnat de la partie c'est le : {{cardsService.sigGameState().winner }}
 </pre>

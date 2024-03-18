@@ -1,18 +1,34 @@
 import { Component } from '@angular/core';
-import { Card } from '../data';
+import { Card, Cards } from '../data';
 import { CardsService } from '../cards.service';
+import { Observable } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css'
 })
 export class TableComponent {
-  testCard : Card | undefined = this.cardsService.testCard()?.cards[0];
-  
-  constructor(private cardsService: CardsService){
-    // this.testCard = cardsService.testCard ;
+  testCard !: Cards ;
+  isAjoker = false ;
+  constructor(public cardsService: CardsService){
+    
+  }
+
+  drawCard(){
+    this.cardsService.drawCard().subscribe(
+      (card) =>{
+        this.cardsService.isAjoker(card.cards[0]) 
+        this.testCard = card
+      } 
+    ) ;
+  }
+
+
+  reset(){
+    this.cardsService.initDeck();
   }
 }
