@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, Signal, WritableSignal, computed, signal} from '@angular/core';
 import { Observable, firstValueFrom, single } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { CARDS_API, Card, Cards, Deck, GameState } from './data';
+import { CARDS_API, Card, Cards, Deck, GameState, Player } from './data';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +44,10 @@ export class CardsService {
 
   drawCard(): Promise<Cards>{
     this._sigGameState.update((gs) => {
-      const turn = gs.turn === "Player1" ? "Player2" : "Player1";
+      let turn: Player ="Player1";
+      if(!gs.isReset){
+         turn = gs.turn === "Player1" ? "Player2" : "Player1";
+      } 
       return {...gs ,turn,isReset: false};  
     });
     return firstValueFrom(this.https.get<Cards>(`${CARDS_API}${this.sigDeck()?.deck_id}/draw/?count=1`));

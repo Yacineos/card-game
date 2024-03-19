@@ -14,7 +14,6 @@ import { CommonModule } from '@angular/common';
 export class TableComponent {
   testCard !: Cards ;
   isAjoker = false ;
-  
   constructor(public cardsService: CardsService){
     
   }
