@@ -31,7 +31,7 @@ export class CardsService {
 
     this.sigDeck.set(deck);
 
-    this._sigGameState.update((gs) => ({...gs,winner: undefined, isReset: true  }));
+    this._sigGameState.update((gs) => ({...gs,turn: 'Player1',winner: undefined, isReset: true  }));
 
     this.sigDeck.set(await this.shuffleDeck());
   }
