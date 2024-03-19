@@ -14,21 +14,21 @@ import { CommonModule } from '@angular/common';
 export class TableComponent {
   testCard !: Cards ;
   isAjoker = false ;
+  
   constructor(public cardsService: CardsService){
     
   }
 
-  drawCard(){
-    this.cardsService.drawCard().subscribe(
-      (card) =>{
-        this.cardsService.isAjoker(card.cards[0]) 
-        this.testCard = card
-      } 
-    ) ;
+  async drawCard(){
+    const cards =  await this.cardsService.drawCard();
+    const card = cards.cards[0];
+
+    this.cardsService.isAjoker(card);
+    this.testCard = cards;
   }
 
 
-  reset(){
-    this.cardsService.initDeck();
+  async reset(){
+    await this.cardsService.initDeck();
   }
 }
